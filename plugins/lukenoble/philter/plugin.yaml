@@ -1,0 +1,6 @@
+plugin:
+    name: 'lukenoble.philter::lang.plugin.name'
+    description: 'lukenoble.philter::lang.plugin.description'
+    author: 'Luke Noble'
+    icon: oc-icon-image
+    homepage: ''
