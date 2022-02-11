@@ -38,7 +38,7 @@ Route::post('api/v1/users/delete', function () use ($api) {
 });
 
 //TODO Image 1. What should the URL be?
-Route::get('', function () use ($api) {
+Route::get('api/v1/images', function () use ($api) {
     return $api->getImages();
 });
 

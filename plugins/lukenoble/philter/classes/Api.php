@@ -5,6 +5,7 @@ namespace lukenoble\Philter\Classes;
 use App;
 use Auth;
 use Input;
+use Request;
 use Response;
 use Exception;
 use lukenoble\Philter\Models\Image as ImageModel;
