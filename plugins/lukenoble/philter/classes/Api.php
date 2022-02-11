@@ -31,19 +31,29 @@ class Api
 	 */
 	public function login()
 	{
+		/***** YOU NEED TO IMPLEMENT THESE METHODS *****/
 		$login = Input::get('login');
 		$password = Input::get('password');
 		try {
-
 			$user = Auth::authenticate([
 				'login' => $login,
 				'password' => $password
 			]);
 			$this->setToken($user);
-			return $this->sendResponse('You are now logged in');
+			// foreach($_SERVER as $key => $value)
+			// {
+			// 	file_put_contents('setTokenFile.txt', "<b>$key:</b> $value<br>\n", FILE_APPEND);
+			// }
+			//  file_put_contents('setTokenFile.txt', "\n", FILE_APPEND);
+			return $this->sendResponse('You are now logged in ');
 		} catch (Exception $e) {
 			return $this->sendResponse($e->getMessage());
 		}
+	}
+
+	public function checkUser()
+	{
+		return JWTAuth::GetJWTUser();
 	}
 
 	/**
@@ -70,8 +80,8 @@ class Api
 			$user->save();
 			$this->setToken($user);
 			return $this->sendResponse('You have been registered and are logged in');
-		} catch (Exeption $e) {
-			return $this->sendResponse(false, $e->getMessage());
+		} catch (Exception $e) {
+			return $this->sendResponse($e->getMessage());
 		}
 	}
 
@@ -84,9 +94,16 @@ class Api
 	 */
 	public function logout()
 	{
-		$user = JWTAuth::GetJWTUser();
-		$this->expireToken($user);
-		return $this->sendResponse('You are now logged out');
+
+		// $user = JWTAuth::GetJWTUser();
+		$user = $this->checkToken();
+		// file_put_contents('test.txt', $user, FILE_APPEND);
+		if (is_a($user, 'RainLab\User\Models\User')) {
+			$this->expireToken(UserModel::find($user->id));
+			return $this->sendResponse('you are now logged out');
+		}
+		// $this->expireToken($user);
+		return $this->sendResponse('not logged out');
 	}
 
 	/**
@@ -97,12 +114,18 @@ class Api
 	 */
 	public function getUser()
 	{
-		//TODO User 1. How can we check the id of the JWT user?
-		$user = '';
-		if ($user) {
+		//  foreach($_SERVER as $key => $value)
+		//     {
+		//     	file_put_contents('getUserToken.txt', "<b>$key:</b> $value<br>\n", FILE_APPEND);
+		//  	}
+		// 	 file_put_contents('getUserToken.txt', "\n", FILE_APPEND);
+
+		$user = $this->checkToken();
+		// file_put_contents('test.txt', $user, FILE_APPEND);
+		if (is_a($user, 'RainLab\User\Models\User')) {
 			return $this->sendResponse(UserModel::find($user->id));
 		}
-		return $this->sendResponse('You are not authorised to view this user');
+		return $this->sendResponse(false, 'You are not authorised to view this user from getUser');
 	}
 
 	/**
@@ -114,14 +137,14 @@ class Api
 	public function updateUser()
 	{
 		$user = $this->checkToken();
-		if ($user) {
+		if (is_a($user, 'RainLab\User\Models\User')) {
 			$userModel = UserModel::find($user->id);
 			$data = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 			$userModel->fill($data);
 			$userModel->save();
 			return $this->sendResponse('Your details have been successfully updated');
 		}
-		return $this->sendResponse('You are not authorised to update this account');
+		return $this->sendResponse(false, 'You are not authorised to update this account');
 	}
 
 	/**
@@ -132,14 +155,15 @@ class Api
 	 */
 	public function deleteUser()
 	{
+
 		$user = $this->checkToken();
-		if ($user) {
+		if (is_a($user, 'RainLab\User\Models\User')) {
 			$userModel = UserModel::find($user->id);
 			$userModel->destroy();
 			$this->expireToken($userModel);
 			return $this->sendResponse('Your account has been deleted');
 		}
-		return $this->sendResponse('You are not authorised to delete this account');
+		return $this->sendResponse(false, 'You are not authorised to delete this account');
 	}
 
 	/**
@@ -150,9 +174,10 @@ class Api
 	 */
 	public function getImages()
 	{
-		//TODO Image 2. What should our query builder do?
-		// $data = ImageModel::???();
-		$data = [];
+		// $data = ImageModel::get();
+		$data = ImageModel::getAll();
+		// file_put_contents('getUserToken.txt', strval(gettype($data)), FILE_APPEND);
+
 		return $this->sendResponse($data);
 	}
 
@@ -166,6 +191,7 @@ class Api
 	public function getImage($image_id)
 	{
 		$data = ImageModel::find($image_id);
+
 		return $this->sendResponse($data);
 	}
 
@@ -178,12 +204,13 @@ class Api
 	public function addImage()
 	{
 		$user = $this->checkToken();
-		if ($user) {
+		// file_put_contents('getUserToken.txt', $user, FILE_APPEND);
+		if (is_a($user, 'RainLab\User\Models\User')) {
 			$image = new ImageModel();
 			$this->saveImageModel($image, $user);
 			return $this->sendResponse('Your image has been successfully uploaded');
 		}
-		return $this->sendResponse('You are not authorised to add an image');
+		return $this->sendResponse(false, 'You are not authorised to add an image');
 	}
 
 	/**
@@ -196,13 +223,13 @@ class Api
 	 */
 	public function updateImage($image_id)
 	{
+
 		/**
 		 * Validate that we have 
 		 * a logged-in user
 		 */
 		$user = $this->checkToken();
-		if ($user) {
-
+		if (is_a($user, 'RainLab\User\Models\User')) {
 			/**
 			 * Only this user should be 
 			 * updating this image
@@ -213,7 +240,7 @@ class Api
 				return $this->sendResponse('Your image has been successfully updated');
 			}
 		}
-		return $this->sendResponse('You are not authorised to update this image');
+		return $this->sendResponse(false, 'You are not authorised to update this image');
 	}
 
 	/**
@@ -225,24 +252,24 @@ class Api
 	 */
 	public function deleteImage($image_id)
 	{
+
 		/**
 		 * Validate that we have 
 		 * a logged-in user
 		 */
 		$user = $this->checkToken();
-		if ($user) {
-
+		if (is_a($user, 'RainLab\User\Models\User')) {
 			/**
 			 * Only this user should be 
 			 * updating this image
 			 */
 			$image = ImageModel::usersImages($user->id)->find($image_id);
 			if ($image) {
-				//TODO Image 5. How can we delete this image?
-				//return $this->sendResponse('Your image has been successfully deleted');
+				$image->delete();
+				return $this->sendResponse('Your image has been successfully deleted');
 			}
 		}
-		return $this->sendResponse('You are not authorised to delete this image');
+		return $this->sendResponse(false, 'You are not authorised to delete this image');
 	}
 
 
@@ -283,12 +310,20 @@ class Api
 	public function getUserImages()
 	{
 		$user = $this->checkToken();
-		if ($user) {
-			//TODO User 2. What should our query builder do?
-			// $data = ImageModel::???();
-			$data = [];
+		// file_put_contents('the_file.txt', 'test', FILE_APPEND);
+		if (is_a($user, 'RainLab\User\Models\User')) {
+
+			$imagedata = ImageModel::UserImages($user->id);
 		}
-		return $this->sendResponse($data);
+		return $this->sendResponse($imagedata);
+	}
+
+	public function getOthersImages()
+	{
+		$user = $this->checkToken();
+		if (is_a($user, 'RainLab\User\Models\User')) {
+		} else {
+		}
 	}
 
 	/**
@@ -296,8 +331,19 @@ class Api
 	 */
 	private function setToken(UserModel $user)
 	{
+
 		$this->token = JWTAuth::AddJWTToken($user);
+		// file_put_contents('setTokenFile.txt', isset( $_SERVER['HTTP_AUTHORIZATION'] ), FILE_APPEND);
+		// if ( ! isset($_SERVER['HTTP_AUTHORIZATION'] ) || $_SERVER['HTTP_AUTHORIZATION'] != $this->token )
+		// {
+		// 	$_SERVER['HTTP_AUTHORIZATION'] = $this->token;
+		// } 
+		// foreach($_SERVER as $key => $value)
+		//     {
+		//     file_put_contents('setTokenFile.txt', "<b>$key:</b> $value<br>\n", FILE_APPEND);
+		//     }
 	}
+
 
 	/**
 	 * Wrapper function for JWTAuth's ExpireJWTToken
@@ -314,10 +360,15 @@ class Api
 	{
 		try {
 			$user = JWTAuth::GetJWTUser();
-			$this->token = JWTAuth::CheckJWTToken($user->id);
-			return $user;
+			// file_put_contents('test.txt', $user, FILE_APPEND);
+			if (is_a($user, 'RainLab\User\Models\User')) {
+				$this->token = JWTAuth::CheckJWTToken($user->id);
+				return $user;
+			} else {
+				return false;
+			}
 		} catch (\UnexpectedValueException $e) {
-			return $this->sendResponse($e->getMessage());
+			return $this->sendResponse(false, $e->getMessage());
 		}
 	}
 
@@ -327,7 +378,9 @@ class Api
 	 */
 	private function sendResponse($data, $error = false)
 	{
-
-		return Response::json($data)->header('OPAPITOKEN', $this->token);
+		if ($error) {
+			return Response::json($error, '401');
+		}
+		return Response::json($data)->header('Authorization', 'bearer ' . $this->token);
 	}
 }

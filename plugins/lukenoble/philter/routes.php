@@ -11,7 +11,20 @@ use Route;
  */
 $api = new Classes\Api();
 
+Route::options('api/v1/{all}', function () {
+    $headers = [
+        'Access-Control-Allow-Methods' => 'POST, GET, OPTIONS, PUT, DELETE',
+        'Access-Control-Allow-Headers' => 'X-Requested-With, Content-Type, X-Auth-Token, Origin, Authorization'
+    ];
+    return \Response::make('You are connected to the API', 200, $headers);
+})->where('any', '.*');
 
+Route::options('api/v1/{any}/{all}', function () {
+    if (Request::getMethod() == "OPTIONS") {
+        echo ('You are connected to the API');
+        die();
+    }
+});
 
 Route::post('/account', function () use ($api) {
     return $api->login();
