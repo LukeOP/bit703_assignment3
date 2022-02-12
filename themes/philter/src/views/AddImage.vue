@@ -1,4 +1,3 @@
-<!-- Add image view -->
 <template>
   <div id="main">
     <div class="container">
@@ -7,11 +6,16 @@
       </div>
     </div>
     <!-- Our AddImage component will go here -->
+    <AddImage />
   </div>
 </template>
 
 <script>
+import AddImage from '@/components/AddImage.vue'
 export default {
-  name: 'add-images'
+  name: 'addImage',
+  components: {
+    AddImage
+  }
 }
 </script>

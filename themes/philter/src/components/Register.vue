@@ -1,30 +1,24 @@
 <template>
   <div class="container">
     <!-- Success or failure message -->
-    <div class="row" v-if="errorMessage">
-            <div class="alert alert-danger"><p>{{ errorMessage }}</p></div>
-        </div>
-        <div class="row" v-if="successMessage">
-            <div class="alert alert-success"><p>{{ successMessage }}</p></div>
-        </div>
     <div class="row">
       <form @submit.prevent="RegisterUser">
         <!-- Form fields -->
         <div class="form-group">
           <label for="userName">Name</label>
-          <input type="text" id="userName" name="name" class="form-control" v-model="apiRequest.name"  />
+          <input type="text" id="userName" name="name" class="form-control"   />
         </div>
         <div class="form-group">
           <label for="userEmail" >Email</label>
-          <input type="email" id="userEmail" name="email" class="form-control" v-model="apiRequest.email"  />
+          <input type="email" id="userEmail" name="email" class="form-control"  />
         </div>
         <div class="form-group">
           <label for="userPassword" >Password</label>
-          <input type="password" id="userPassword" name="password" class="form-control" v-model="apiRequest.password" />
+          <input type="password" id="userPassword" name="password" class="form-control"  />
         </div>
         <div class="form-group">
           <label for="userPassword_confirmation" >Password confirmation</label>
-          <input type="password" id="userPassword_confirmation" name="password_confirmation" class="form-control" v-model="apiRequest.password_confirmation" />
+          <input type="password" id="userPassword_confirmation" name="password_confirmation" class="form-control" />
         </div>
         <input
           type="submit"
