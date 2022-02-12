@@ -1,4 +1,3 @@
-<!-- philter/src/partials/header.vue: -->
 <template>
     <div>
         <div class="container-fliud">
@@ -8,21 +7,26 @@
                 </button>
                 <div class="collapse navbar-collapse" id="main-navbar">
                     <ul class="navbar-nav ml-md-auto">
-                        <li>
+
+                        <router-link tag="li" to="/">
                             <a>Home</a>
-                        </li>
-                        <li>
+                        </router-link>
+
+                        <router-link tag="li" to="/image">
                             <a>Images</a>
-                        </li>
-                        <li>
+                        </router-link>
+
+                        <router-link tag="li" to="/account">
                             <a>Welcome</a>
-                        </li>
-                        <li>
+                        </router-link>
+
+                        <router-link tag="li" to="/account">
                             <a>Login</a>
-                        </li>
-                        <li>
+                        </router-link>
+
+                        <router-link tag="li" to="/account">
                             <a>Register</a>
-                        </li>
+                        </router-link>
                         <li><a href="#">Logout</a></li>
                     </ul>
                 </div>

@@ -6915,8 +6915,6 @@ h4 {
   h4 {
     font-size: 2rem;
     line-height: 2.5rem; } }
-body {
-  overflow: hidden; }
 
 a {
   color: #F7C331;
@@ -7109,52 +7107,48 @@ footer {
     text-align: right; }
 
 /* Hero */
-
 #hero_wrapper {
   background: #fff;
-  padding: 0px 60px;
+  padding: 60px;
   width: 100%;
-  height: 100vh;
+  height: 1000px;
   display: block;
   position: relative; 
 }
-#hero_wrapper #hero {
-  background: url(../img/hero.jpg) no-repeat center center fixed;
-  height: 100%;
-  width: 100%;
-  display: block;
-  position: relative;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover; 
-}
-#hero_wrapper #hero .container-fluid .row {
-  padding: 60px; 
-}
-#hero_wrapper #hero .container-fluid .row img {
-  display: block; 
-}
-#hero_wrapper #hero .container-fluid .row h1 {
-  margin-bottom: 15px;
-  text-transform: uppercase;
-  width: 100%;
-  color: #F7C331; 
-}
-#hero_wrapper #hero .container-fluid .row p {
-  margin-bottom: 0;
-  color: #fff;
-  font-weight: 700;
-  display: block;
-  width: 100%;
-  margin-bottom: 15px; 
-}
-#hero_wrapper #hero .container-fluid .row .btn.btn-primary {
-  background: none; 
-}
-#hero_wrapper #hero .container-fluid .row .btn.btn-primary:hover {
-  background: none; 
-}
+  #hero_wrapper #hero {
+    background: url(../img/hero.jpg) no-repeat center center fixed;
+    height: 100%;
+    width: 100%;
+    display: block;
+    position: relative;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover; 
+  }
+    #hero_wrapper #hero .container-fluid .row {
+      padding: 60px; 
+    }
+      #hero_wrapper #hero .container-fluid .row img {
+        display: block; 
+      }
+      #hero_wrapper #hero .container-fluid .row h1 {
+        margin-bottom: 15px;
+        text-transform: uppercase;
+        width: 100%;
+        color: #F7C331; 
+      }
+      #hero_wrapper #hero .container-fluid .row p {
+        margin-bottom: 0;
+        color: #fff;
+        font-weight: 700;
+        display: block;
+        width: 100%;
+        margin-bottom: 15px; }
+      #hero_wrapper #hero .container-fluid .row .btn.btn-primary {
+        background: none; }
+        #hero_wrapper #hero .container-fluid .row .btn.btn-primary:hover {
+          background: none; }
 
 #others-images-home {
   background: #fff;

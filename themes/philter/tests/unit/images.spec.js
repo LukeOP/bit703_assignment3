@@ -1,10 +1,10 @@
 import { expect } from 'chai'
 import { shallowMount } from '@vue/test-utils'
-import Home from '@/views/account.vue'
+import Home from '@/views/images.vue'
 
-describe('Account.vue', () => {
+describe('Images.vue', () => {
   it('renders welcome message', () => {
-    const welcomeText = 'User Login/Registration'
+    const welcomeText = 'Latest Images'
     const wrapper = shallowMount(Home, {})
     expect(wrapper.text()).to.include(welcomeText)
   })
