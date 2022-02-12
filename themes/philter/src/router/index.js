@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/home.vue'
-import images from '../views/images.vue'
+import Home from '../views/Home.vue'
+import images from '../views/Images.vue'
 import Account from '../views/account.vue'
-import AddImage from '../views/addimage.vue'
+import AddImage from '../views/AddImage.vue'
 import UpdateImage from '../views/updateimage.vue'
 
 Vue.use(VueRouter)
@@ -16,7 +16,7 @@ const routes = [
   },
   {
     path: '/image',
-    name: 'image',
+    name: 'images',
     component: images
     // meta: { bodyClass: 'bg-light' }
   },
