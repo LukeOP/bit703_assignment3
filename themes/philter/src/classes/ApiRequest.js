@@ -8,8 +8,12 @@ class ApiRequest {
    */
   constructor (data = false) {
     this.Axios = Axios
-    this.url = 'localhost/bit703/Assignment3/api/v1/'
+    this.url = 'bit703/Assignment3/api/v1/'
     this.data = data
+
+    this.headers = {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
   }
 
   /**
@@ -18,6 +22,24 @@ class ApiRequest {
    */
   get (url) {
     return this.submit('get', url)
+  }
+
+  post (url) {
+    return this.submit('post', url)
+  }
+
+  /**
+   * Adds a Vuex store to our class
+   */
+   addStore(store) {
+    this.store = store;
+  }
+
+  /**
+   * Adds a Vuex store to our class
+   */
+   addAuth() {
+    this.headers.Authorization = `Bearer  ${this.store.getters.getToken}`;
   }
 
   /**
@@ -40,6 +62,17 @@ class ApiRequest {
           reject(error.message)
         })
     })
+  }
+
+  storeToken(bearerHeader) {
+    const parts = bearerHeader.split(' ');
+    if (parts.length === 2) {
+      const scheme = parts[0];
+      const token = parts[1];
+      if (/^Bearer$/i.test(scheme)) {
+        this.store.dispatch('login', token);
+      }
+    }
   }
 }
 

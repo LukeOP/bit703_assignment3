@@ -16,7 +16,7 @@
                             <a>Images</a>
                         </router-link>
 
-                        <router-link tag="li" to="/account">
+                        <router-link v-show="user" tag="li" to="/account">
                             <a>Welcome</a>
                         </router-link>
 
@@ -34,3 +34,22 @@
         </div>
     </div>
 </template>
+
+<script>
+
+import { mapGetters } from 'vuex';
+
+export default {
+  name: 'logout',
+  computed: {
+    user () {
+      return this.$store.getters.isLoggedIn
+    }
+  },
+  methods: {
+    logout() {
+      this.$store.dispatch('logout')
+    }
+  }
+}
+</script>

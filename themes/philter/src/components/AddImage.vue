@@ -61,9 +61,55 @@
 </template>
 
 <script>
-
+import Axios from 'axios'
+Axios.defaults.withCredentials = true
 export default {
-  name: 'AddImages'
-}
+  name: 'AddImage',
+  data () {
+    return {
+      name: '',
+      description: '',
+      tag: '',
+      filter: '',
+      file: '',
+      errorMessage: '',
+      successMessage: ''
+    }
+  },
+  methods: {
+    handleFileUpload (event) {
+      this.file = event.target.files[0]
+    },
+    addImage () {
+      const config = {
+        headers: {
+          Authorization: 'Bearer ' + this.$store.getters.getToken
+        }
+      }
+      const formData = new FormData()
+      formData.append('name', this.name)
+      formData.append('userID', this.$store.getters.getUserID)
+      formData.append('description', this.description)
+      formData.append('filter', this.filter)
+      formData.append('tag', this.tag)
+      formData.append('file', this.file)
 
+      Axios.post('http://localhost/bit703/assignment3/api/v1/img/add', formData, config)
+        .then((response) => {
+          this.successMessage = response
+          this.errorMessage = ''
+        })
+        .catch((errors) => {
+          this.errorMessage = errors
+          this.successMessage = ''
+        })
+    }
+  },
+
+  mounted () {
+    // this.someData = this.$refs.id.value
+    console.log(this.$store.getters.getUserID)
+  }
+
+}
 </script>
