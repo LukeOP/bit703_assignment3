@@ -8,7 +8,7 @@ class ApiRequest {
    */
   constructor (data = false) {
     this.Axios = Axios
-    this.url = 'bit703/Assignment3/api/v1/'
+    this.url = 'http://bit703.module6/api/v1/'
     this.data = data
 
     this.headers = {
@@ -31,15 +31,15 @@ class ApiRequest {
   /**
    * Adds a Vuex store to our class
    */
-   addStore(store) {
-    this.store = store;
+  addStore (store) {
+    this.store = store
   }
 
   /**
    * Adds a Vuex store to our class
    */
-   addAuth() {
-    this.headers.Authorization = `Bearer  ${this.store.getters.getToken}`;
+  addAuth () {
+    this.headers.Authorization = `Bearer  ${this.store.getters.getToken}`
   }
 
   /**
@@ -64,13 +64,13 @@ class ApiRequest {
     })
   }
 
-  storeToken(bearerHeader) {
-    const parts = bearerHeader.split(' ');
+  storeToken (bearerHeader) {
+    const parts = bearerHeader.split(' ')
     if (parts.length === 2) {
-      const scheme = parts[0];
-      const token = parts[1];
+      const scheme = parts[0]
+      const token = parts[1]
       if (/^Bearer$/i.test(scheme)) {
-        this.store.dispatch('login', token);
+        this.store.dispatch('login', token)
       }
     }
   }

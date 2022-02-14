@@ -22,8 +22,9 @@
 </template>
 
 <script>
+
 export default {
-  data() {
+  data () {
     return {
       apiRequest: new this.$request({
         login: '',
@@ -31,10 +32,10 @@ export default {
       }),
       errorMessage: '',
       successMessage: ''
-     }
+    }
   },
   methods: {
-    OnLogin() {
+    OnLogin () {
       this.apiRequest.addStore(this.$store)
       this.apiRequest.post('login')
         .then((response) => {

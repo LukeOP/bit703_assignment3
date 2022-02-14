@@ -37,7 +37,7 @@
 
 <script>
 
-import { mapGetters } from 'vuex';
+// import { mapGetters } from 'vuex'
 
 export default {
   name: 'logout',
@@ -47,7 +47,7 @@ export default {
     }
   },
   methods: {
-    logout() {
+    logout () {
       this.$store.dispatch('logout')
     }
   }
