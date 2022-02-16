@@ -143,14 +143,7 @@ class JWTAuth
      */
     private static function GetJWTToken()
     {
-        $auth = isset($_SERVER['HTTP_AUTHORIZATION']) ?  filter_var($_SERVER['HTTP_AUTHORIZATION'], FILTER_SANITIZE_STRING) : false;
-        if ($auth) {
-            $parts = explode(' ', $auth);
-            if (count($parts) == 2 && $parts[0] == 'Bearer') {
-                return $parts[1];
-            }
-        }
-        return false;
+        return isset($_SERVER['HTTP_OPAPITOKEN']) ?  filter_var($_SERVER['HTTP_OPAPITOKEN'], FILTER_SANITIZE_STRING) : false;
     }
 
 }

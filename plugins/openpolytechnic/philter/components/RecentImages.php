@@ -1,4 +1,6 @@
-<?php namespace Openpolytechnic\Philter\Components;
+<?php
+
+namespace Openpolytechnic\Philter\Components;
 
 use Auth;
 use Cms\Classes\ComponentBase;
@@ -6,7 +8,7 @@ use Openpolytechnic\Philter\Models\Image as ImageModel;
 
 class RecentImages extends ComponentBase
 {
-    public $images; 
+    public $images;
 
     public function componentDetails()
     {
@@ -25,7 +27,7 @@ class RecentImages extends ComponentBase
     {
         $user = Auth::getUser();
         if (is_object($user)) {
-            $this->images = ImageModel::othersImages($user->id)->latest()->get();
+            $this->images = ImageModel::scopeOthersImages($user->id)->latest()->get();
         } else {
             $this->images = ImageModel::with('tags')->latest()->get();
         }
