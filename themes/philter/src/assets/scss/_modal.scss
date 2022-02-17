@@ -1,0 +1,43 @@
+
+.modal-dialog {
+  max-width: 75vw !important; 
+  .modal-content {
+    background-color: transparent;
+    border: none;
+    border-radius: 0;
+    display: flex;
+    justify-content: center;
+    /* align horizontal */
+    align-items: center;
+    /* align vertical */ 
+    .modal-body {
+      padding: 0;
+      background-color: #fff; 
+      img {
+        width: 100%;
+        height: auto; 
+        max-height: 40vw;
+      }
+      h5 {
+        color: #F7C331;
+        font-weight: 700;
+        margin-top: 15px;
+        margin-left: 15px; 
+      }
+      p {
+        margin-top: 5px;
+        margin-left: 15px; 
+      }
+      .close {
+        position: absolute;
+        border-bottom: none;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        right: 15px;
+        bottom: 15px;
+        color: #46525b;
+        text-shadow: none; 
+      }
+    }
+  }
+}

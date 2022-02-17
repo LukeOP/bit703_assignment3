@@ -1,0 +1,21 @@
+==
+<div class="container-fluid">
+    <nav id="menu" class="navbar navbar-expand-md navbar-light">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="main-navbar">
+            <ul class="navbar-nav ml-md-auto">
+                <li><a href="/">Home</a></li>
+                <li><a href="/image">Images</a></li>
+                {% if user %}
+                <li><a href="/account">Welcome {{ user.name }}</a></li>
+                <li><a href="#" data-request="onLogout" data-request-data="redirect: '/'">Logout</a></li>
+                {% else %}
+                <li><a href="/account">Login</a></li>
+                <li><a href="/account">Register</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+</div>

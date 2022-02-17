@@ -1,0 +1,28 @@
+title = "Image"
+url = "/image"
+layout="default"
+description="View images uploaded by yourself or others"
+is_hidden = 0
+
+[UserImages]
+[RecentImages]
+[DeleteImage]
+==
+
+
+<div id="main">
+    <div class="container">
+{% component 'UserImages' %}
+
+{% component 'RecentImages' show_tags='true'%}
+    </div>
+</div>
+
+ 
+<div id = "image-modal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body"></div>
+        </div>
+    </div>
+</div>
