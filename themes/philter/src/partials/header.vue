@@ -27,7 +27,7 @@
                         <router-link tag="li" to="/account">
                             <a>Register</a>
                         </router-link>
-                        <li><a href="#">Logout</a></li>
+                        <li><a v-show="user">Logout</a></li>
                     </ul>
                 </div>
             </nav>

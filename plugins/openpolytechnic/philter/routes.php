@@ -63,6 +63,6 @@ Route::post('api/v1/images/update/{image_id}', function ($image_id) use ($api) {
     return $api->updateImage($image_id);
 });
 
-Route::get('api/v1/users/delete/{image_id}', function ($image_id) use ($api) {
+Route::get('api/v1/images/delete/{image_id}', function ($image_id) use ($api) {
     return $api->deleteImage($image_id);
 });

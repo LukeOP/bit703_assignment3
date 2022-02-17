@@ -1,4 +1,6 @@
-<?php namespace Openpolytechnic\Philter\Classes;
+<?php
+
+namespace Openpolytechnic\Philter\Classes;
 
 use Auth;
 use Config;
@@ -23,17 +25,17 @@ class JWTAuth
      * 
      * @return  bool|object The JWT's payload as a PHP object, or false on failure
      */
-    public static function CheckJWTToken($user_id=false)
-	{
-		$jwt_user = self::GetJWTUser();
-		if ($jwt_user) {
-			if ($user_id && ($jwt_user->id != $user_id)) {
-				return false;
-			}
-			return self::AddJWTToken($jwt_user);
-		}
-		return false;
-	}
+    public static function CheckJWTToken($user_id = false)
+    {
+        $jwt_user = self::GetJWTUser();
+        if ($jwt_user) {
+            if ($user_id && ($jwt_user->id != $user_id)) {
+                return false;
+            }
+            return self::AddJWTToken($jwt_user);
+        }
+        return false;
+    }
 
     /**
      * Finds the October user from the JWT token user,
@@ -48,14 +50,13 @@ class JWTAuth
          * return the user.
          */
         $token = self::GetRequestToken();
-		if ($token && isset($token->data->user->id)) {
-			$jwt_user = UserModel::find($token->data->user->id);
-			if (is_a($jwt_user, 'RainLab\User\Models\User')) {
-				return $jwt_user;
-			}
-		}
+        if ($token && isset($token->data->user->id)) {
+            $jwt_user = UserModel::find($token->data->user->id);
+            if (is_a($jwt_user, 'RainLab\User\Models\User')) {
+                return $jwt_user;
+            }
+        }
         return false;
-
     }
 
     /**
@@ -69,7 +70,7 @@ class JWTAuth
      *
      * @return object The JWT's payload as a PHP object
      */
-    public static function AddJWTToken(UserModel $jwt_user, $expired=false)
+    public static function AddJWTToken(UserModel $jwt_user, $expired = false)
     {
 
         /**
@@ -86,13 +87,13 @@ class JWTAuth
         }
 
         $token = array(
-            'iss' => Config::get('app.url'), 	//Issurer 		= The base url of the blog
-            'iat' => $issued_at,				//Issued at 	= The current timestamp
-            'nbf' => $not_before,				//Not before 	= The earliest time this will be valid, also the current timestamp
-            'exp' => $expire,					//Expiry 		= When the token expires
-            'data' => array(		
+            'iss' => Config::get('app.url'),     //Issurer 		= The base url of the blog
+            'iat' => $issued_at,                //Issued at 	= The current timestamp
+            'nbf' => $not_before,                //Not before 	= The earliest time this will be valid, also the current timestamp
+            'exp' => $expire,                    //Expiry 		= When the token expires
+            'data' => array(
                 'user' => array(
-                    'id' => $jwt_user->id,		//Data 			= User specific data
+                    'id' => $jwt_user->id,        //Data 			= User specific data
                 ),
             ),
         );
@@ -132,7 +133,7 @@ class JWTAuth
         if (!$token) {
             return false;
         }
-		return JWT::decode($token, self::OP_JWT_KEY, array('HS256'));
+        return JWT::decode($token, self::OP_JWT_KEY, array('HS256'));
     }
 
     /**
@@ -145,6 +146,4 @@ class JWTAuth
     {
         return isset($_SERVER['HTTP_OPAPITOKEN']) ?  filter_var($_SERVER['HTTP_OPAPITOKEN'], FILTER_SANITIZE_STRING) : false;
     }
-
 }
-
